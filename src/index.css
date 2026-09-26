@@ -1,0 +1,328 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   MALLI — design tokens
+
+   The palette is the client's, and only the client's:
+   champagne gold · clay pot · walnut · red wine (#580016) · white.
+   Every dark surface is a material, not a flat fill: walnut carries a grain,
+   the wine sections carry a bloom, and light sections carry paper tooth.
+   ───────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Editorial serif for display, refined sans for everything else. */
+  --font-serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Champagne gold — brand details, one CTA, hairline borders. */
+  --color-gold-50: #FBF6EA;
+  --color-gold-100: #F2E6CB;
+  --color-gold-200: #E4D2AC;
+  --color-gold-300: #D2B888;
+  --color-gold-400: #C0A063;
+
+  /* Clay pot — supporting accent, warm mid-tones. */
+  --color-clay-200: #E3BCA9;
+  --color-clay-300: #CE9A80;
+  --color-clay-400: #B87A5E;
+  --color-clay-500: #9C6144;
+
+  /* Walnut — the primary dark surface. */
+  --color-walnut-700: #4A3427;
+  --color-walnut-800: #3A281D;
+  --color-walnut-900: #2C1E16;
+  --color-walnut-950: #1E1410;
+
+  /* Red wine — client value RGB(88, 0, 22). Atmospheric sections only. */
+  --color-wine-300: #C4707F;
+  --color-wine-500: #8E1F3C;
+  --color-wine-600: #6E0A28;
+  --color-wine-700: #580016;
+  --color-wine-800: #420012;
+  --color-wine-900: #2C000D;
+
+  /* Warm white — the paper stock the light sections are printed on. */
+  --color-paper-50: #FDFBF7;
+  --color-paper-100: #F7F2EA;
+  --color-paper-200: #EFE7DA;
+  --color-paper-300: #DFD3C1;
+
+  /* Ink for light sections. */
+  --color-ink-500: #6B5B4E;
+  --color-ink-700: #3A2E25;
+  --color-ink-900: #201913;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: var(--color-paper-50);
+    background-color: var(--color-walnut-950);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    /* The page never sits on flat black: walnut is the ground colour. */
+    background-color: var(--color-walnut-950);
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-200);
+    outline-offset: 3px;
+  }
+
+  /* Native controls follow the light sections. */
+  select option {
+    background-color: #201913;
+    color: #FDFBF7;
+  }
+}
+
+/* ── Lenis smooth scroll ──────────────────────────────────────────────────
+   Lenis' own stylesheet; keep in sync when upgrading. `scroll-behavior: auto`
+   is required because Lenis drives scrolling itself. */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
+/* ── Material surfaces ─────────────────────────────────────────────────────
+   Real texture, not decoration: a 256px seamless grain tiled at low opacity so
+   large fields read as walnut, clay or paper rather than as flat colour. */
+
+.surface-walnut {
+  background-color: var(--color-walnut-900);
+  background-image: url("/media/walnut.webp");
+  background-size: 512px 512px;
+}
+.surface-walnut-deep {
+  background-color: var(--color-walnut-950);
+  background-image: url("/media/walnut.webp");
+  background-size: 512px 512px;
+}
+.surface-wine {
+  background-color: var(--color-wine-800);
+  background-image: url("/media/walnut.webp");
+  background-size: 512px 512px;
+}
+.surface-clay {
+  background-color: var(--color-clay-500);
+  background-image: url("/media/clay.webp");
+  background-size: 512px 512px;
+}
+.surface-paper {
+  background-color: var(--color-paper-100);
+  background-image: url("/media/paper.webp");
+  background-size: 512px 512px;
+}
+
+/* A single warm light source, used to seat photography into a dark surface. */
+.vignette-warm {
+  background:
+    radial-gradient(120% 90% at 50% 8%, rgba(226, 197, 150, 0.10) 0%, transparent 55%),
+    radial-gradient(100% 100% at 50% 100%, rgba(20, 12, 8, 0.55) 0%, transparent 60%);
+}
+
+/* Hairline rules in champagne, used instead of card borders. */
+.rule-gold { border-color: color-mix(in srgb, var(--color-gold-200) 26%, transparent); }
+.rule-ink  { border-color: color-mix(in srgb, var(--color-ink-900) 14%, transparent); }
+
+/* ── Type scale ─────────────────────────────────────────────────────────────
+   Two sizes only: a display serif and a reading sans. Anything that needs a
+   third treatment is a sign the copy should be shorter. */
+
+.display {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+.display em { font-style: italic; }
+
+.lede {
+  font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.3125rem);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* Small caps label. Used sparingly — never on every line of copy. */
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────
+   One primary treatment on the whole site: a flat champagne field, no glow. */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--color-gold-200);
+  color: var(--color-walnut-950);
+  padding: 0.9375rem 1.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background-color 260ms ease, color 260ms ease;
+  cursor: pointer;
+}
+.btn-primary:hover { background-color: var(--color-gold-50); }
+
+.btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: currentColor;
+  padding-bottom: 0.375rem;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 34%, transparent);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: border-color 260ms ease, opacity 260ms ease;
+  cursor: pointer;
+}
+.btn-quiet:hover { border-bottom-color: currentColor; opacity: 0.75; }
+
+/* Underline that grows from the left on hover. */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-underline:hover::after { transform: scaleX(1); }
+
+/* ── Botanical line art ────────────────────────────────────────────────────
+   Static engraving-style motifs. They frame content; they never float. */
+
+.botanical { color: var(--color-gold-200); opacity: 0.5; }
+
+/* ── Scroll cue ──────────────────────────────────────────────────────────── */
+@keyframes cue-drop {
+  0%   { transform: translateY(0);    opacity: 0; }
+  35%  { opacity: 1; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+.cue-drop { animation: cue-drop 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+/* ── Readability system ────────────────────────────────────────────────────
+   Photography stays the hero; typography gets a controlled visual zone.
+   Each scrim is directional and localized — never a full-image blackout. */
+
+/* Soft shadow that lifts type off photography without a panel. */
+.shadow-type { text-shadow: 0 1px 2px rgba(14, 9, 5, 0.85), 0 2px 18px rgba(14, 9, 5, 0.65); }
+.shadow-type-soft { text-shadow: 0 1px 10px rgba(14, 9, 5, 0.7); }
+
+/* Left-anchored copy: darker at the left edge, releasing into the image. */
+.scrim-left {
+  background: linear-gradient(90deg,
+    rgba(14, 9, 5, 0.82) 0%,
+    rgba(14, 9, 5, 0.62) 30%,
+    rgba(14, 9, 5, 0.28) 58%,
+    transparent 82%);
+}
+/* Right-anchored copy: the mirror of the above. */
+.scrim-right {
+  background: linear-gradient(270deg,
+    rgba(14, 9, 5, 0.82) 0%,
+    rgba(14, 9, 5, 0.62) 30%,
+    rgba(14, 9, 5, 0.28) 58%,
+    transparent 82%);
+}
+/* Centred copy: a soft radial pocket of darkness, no rectangle. */
+.scrim-center {
+  background: radial-gradient(58% 62% at 50% 50%,
+    rgba(14, 9, 5, 0.62) 0%,
+    rgba(14, 9, 5, 0.30) 55%,
+    transparent 78%);
+}
+/* Bottom-anchored copy (mobile sheets, captions): rises from the lower edge. */
+.scrim-bottom {
+  background: linear-gradient(to top,
+    rgba(14, 9, 5, 0.88) 0%,
+    rgba(14, 9, 5, 0.55) 42%,
+    rgba(14, 9, 5, 0.18) 72%,
+    transparent 100%);
+}
+/* Top edge: keeps folios and navigation legible over bright ceilings. */
+.scrim-top {
+  background: linear-gradient(to bottom,
+    rgba(14, 9, 5, 0.62) 0%,
+    rgba(14, 9, 5, 0.28) 55%,
+    transparent 100%);
+}
+
+/* Last-resort translucent surface: only behind small, dense text clusters,
+   never behind a whole section. */
+.copy-panel {
+  background: rgba(16, 10, 6, 0.44);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(228, 210, 172, 0.14);
+}
+
+/* Photography is graded for the page: a breath brighter so rooms read as
+   rooms, never as black fields. Applied per-image, not as a global filter. */
+.photo-lift { filter: brightness(1.06) contrast(1.02) saturate(1.02); }
+
+/* Navigation stays legible over any frame. */
+.nav-shell { text-shadow: 0 1px 8px rgba(14, 9, 5, 0.8); }
+
+/* ── Utilities ──────────────────────────────────────────────────────────── */
+
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+.will-change-transform { will-change: transform; }
+.will-change-opacity   { will-change: opacity; }
+
+/* Only on surfaces that actually hold a dark image. */
+.media-scrim::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20, 12, 8, 0.82) 0%, rgba(20, 12, 8, 0.18) 45%, rgba(20, 12, 8, 0.45) 100%);
+  pointer-events: none;
+}
+
+/* ── Custom scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-walnut-950); }
+::-webkit-scrollbar-thumb { background: var(--color-walnut-700); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-clay-400); }
+
+/* ── Reduced motion ───────────────────────────────────────────────────────
+   useLenis and every section already skip their animation work; this covers
+   the pure-CSS transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1E1410" />
+
+    <title>Malli — Indian Reimagined | Holly Springs, NC</title>
+    <meta
+      name="description"
+      content="Malli means jasmine. Seven rooms, one kitchen, and an Indian kitchen cooking the way it was taught. Fine dining in Holly Springs, North Carolina."
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/logo.jpeg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Malli — Indian Reimagined" />
+    <meta
+      property="og:description"
+      content="Seven rooms, one kitchen, and an evening with no particular reason to end."
+    />
+    <meta property="og:image" content="/media/hero-poster.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      The opening frame is painted from the poster before any script runs, so the
+      first viewport is never an empty rectangle while the film and the webfonts
+      are still on their way.
+    -->
+    <style>
+      html { background: #1e1410; }
+      #root:empty {
+        min-height: 100svh;
+        background: #1e1410 url('/media/hero-poster.webp') center / cover no-repeat;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
